@@ -1,6 +1,6 @@
 # 🚖 Rydr - Ride Sharing Platform
 
-Rydr is a modern ride-sharing platform built using the **MERN Stack**. It provides seamless real-time communication between captains and users, location tracking, authentication, and secure transactions.
+Rydr is a modern ride-sharing platform built using the **MERN Stack**. It provides seamless real-time communication between captains and users, location tracking, authentication.
 
 ## 🚀 Features
 
