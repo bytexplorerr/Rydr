@@ -33,7 +33,9 @@ const Riding = ({rideInfo,directions,setDirections,distance,setDistance,time,set
                     setCaptainCoordinates(newCaptainCoordinates);
 
                     try {
-                        await axios.post(`${import.meta.env.VITE_BASE_URL}/rides/update-captain-location`,{rideId:rideInfo._id,location:newCaptainCoordinates});
+                        await axios.post(`${import.meta.env.VITE_BASE_URL}/rides/update-captain-location`,{rideId:rideInfo._id,location:newCaptainCoordinates},{
+                            withCredentials:true,
+                        });
                     } catch(err) {
                         console.log(err.message);
                     }
@@ -58,16 +60,8 @@ const Riding = ({rideInfo,directions,setDirections,distance,setDistance,time,set
     const {setMessages} = useContext(SocketContext);
 
     const handleCancelRide = async ()=>{
-        const token = document.cookie.split('; ').find((row)=>row.startsWith('token='))?.split('=')[1];
-        if(!token) {
-            toast.error('Something went wrong!');
-            return;
-        }
         try {
             const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/rides/captain-cancel-ride`,{rideId:rideInfo._id,},{
-                headers:{
-                    Authorization:`Bearer ${token}`,
-                },
                 withCredentials:true,
             });
 
@@ -130,6 +124,8 @@ const Riding = ({rideInfo,directions,setDirections,distance,setDistance,time,set
             const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/rides/verify-otp`,{
                 rideId:rideInfo._id,
                 otp,
+            },{
+                withCredentials:true,
             });
             
             if(response.status === 200) {
@@ -196,18 +192,12 @@ const Riding = ({rideInfo,directions,setDirections,distance,setDistance,time,set
             const destination = isOTPverified
                 ? `${destinationCoordinates.lat},${destinationCoordinates.lng}`
                 : `${pickupCoordinates.lat},${pickupCoordinates.lng}`;
-
-
-            const token = document.cookie.split('; ').find((row)=>row.startsWith('token='))?.split('=')[1];
     
             const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/maps/get-distance-time-captain`, {
                 params:{
                 origin: `${captainCoordinates.lat},${captainCoordinates.lng}`,
                 destination: destination,
-            },headers:{
-                Authorization:`Bearer ${token}`,
-            },  
-                withCredentials: true,
+            }, withCredentials: true,
             });
     
             if (response.status === 200 && response.data) {

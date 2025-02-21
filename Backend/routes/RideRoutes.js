@@ -28,10 +28,10 @@ RideRouter.post("/captain-cancel-ride",authMiddleware.authCaptain,rideController
 
 RideRouter.post("/chats",rideController.sendMessage);
 
-RideRouter.post("/verify-otp",rideController.verifyOTP);
+RideRouter.post("/verify-otp",authMiddleware.authCaptain,rideController.verifyOTP);
 
-RideRouter.delete("/ride-completed",rideController.finishRide);
+RideRouter.delete("/ride-completed",authMiddleware.authCaptain,rideController.finishRide);
 
-RideRouter.post("/update-captain-location",rideController.updateCaptainLocation)
+RideRouter.post("/update-captain-location",authMiddleware.authCaptain,rideController.updateCaptainLocation)
 
 module.exports = RideRouter;

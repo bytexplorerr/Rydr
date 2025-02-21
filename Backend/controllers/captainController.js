@@ -83,8 +83,15 @@ const loginCaptain = async (req,res,next) => {
 
         const token = captain.generateAuthToken();
 
-        res.cookie('token',token);
-        res.status(200).json({token,captain});
+        // Set Cookie with Token
+        res.cookie('token', token, {
+            httpOnly: true,   // Prevents XSS attacks (not accessible by JavaScript)
+            secure: true,     // Ensures HTTPS only (set `false` for localhost)
+            sameSite: 'Lax', // Required for cross-origin requests with cookies
+            expires: new Date(Date.now() + 24 * 60 * 60 * 1000), // Expires in 24 hours
+        });
+
+        return res.status(200).json({token,captain});
     }
     catch(err)
     {
@@ -93,7 +100,7 @@ const loginCaptain = async (req,res,next) => {
 }
 
 const getCaptainProfile = async (req,res,next) => {
-    return res.status(200).json(req.captain);
+    return res.status(200).json({captain:req.captain,token:req.cookies.token});
 }
 
 const logoutCaptain = async (req,res,next) => {

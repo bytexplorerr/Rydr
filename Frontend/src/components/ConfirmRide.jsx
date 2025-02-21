@@ -15,15 +15,10 @@ const ConfirmRide = () => {
             const tripRequestInfo = {
                 pickup:tripInfo.pickupLocation,
                 drop:tripInfo.dropoffLocation,
-                vehicleType:tripInfo.vehicleType
+                vehicleType:tripInfo.vehicleType,
             }
-
-            const token = document.cookie.split('; ').find((row)=>row.startsWith('token=')).split('=')[1];
     
             const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/rides/create`,tripRequestInfo,{
-                headers:{
-                    Authorization:`Bearer ${token}`,
-                },
                 withCredentials:true,
             });
     

@@ -18,13 +18,8 @@ const GetRide = ({setScrollTriggers}) => {
           return;
         }
         try {
-          //extracting the token from cookie
-          const token = document.cookie.split('; ').find((row)=> row.startsWith('token=')).split('=')[1];
-
+        
           const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/maps/get-suggestions?input=${query}`,{
-            headers:{
-              Authorization:`Bearer ${token}`,
-            },
             withCredentials:true,
           });
 

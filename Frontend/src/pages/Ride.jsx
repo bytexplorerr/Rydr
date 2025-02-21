@@ -73,6 +73,7 @@ const Ride = () => {
 
   useEffect(()=>{
       const handleRideConfirmed = (data)=>{
+        console.log(data);
         setSearchCaptain(false);
         setRideConfirmed(true);
         setRideInfo(data);
@@ -118,29 +119,6 @@ const Ride = () => {
         removeMessage('captain-ride-cancelled',handleRideCancel);
       }
     },[]);
-
-  useEffect(()=>{
-    
-    const verifyUser = async ()=>{
-      try {
-
-        const response = await axios.get(`${import.meta.env}/users/check-isAuthorize`,{token:userToken});
-
-        if(response.status !== 200) {
-          const res = await axios.post(`${import.meta.env}/users/logout`,{},{
-            withCredentials:true
-          });
-          toast.error('Please Login Again to use the services!');
-          navigate("/login");
-        }
-  
-      } catch(err) {
-        navigate("/");
-      }
-    }
-    verifyUser();
-
-  },[]);
 
   useEffect(()=>{
 
@@ -221,16 +199,11 @@ const Ride = () => {
             : `${pickupCoordinates.lat},${pickupCoordinates.lng}`;
 
 
-        const token = document.cookie.split('; ').find((row)=>row.startsWith('token='))?.split('=')[1];
-
         const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/maps/get-distance-time-user`, {
             params:{
             origin: `${captainCoordinates.lat},${captainCoordinates.lng}`,
             destination: destination,
-        },headers:{
-            Authorization:`Bearer ${token}`,
-        },  
-            withCredentials: true,
+        },  withCredentials: true,
         });
 
         if (response.status === 200 && response.data) {

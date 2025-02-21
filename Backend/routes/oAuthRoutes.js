@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/userModel");
 const { OAuth2Client } = require("google-auth-library");
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+const { GoogleOAuthMailService } = require("../services/mailService");
 
 const router = express.Router();
 
@@ -49,7 +50,6 @@ router.post("/google-login", async (req, res) => {
     try {
       const { credential } = req.body; // Match frontend's key
 
-      
       // Verify the Google ID token
       const ticket = await client.verifyIdToken({
         idToken: credential,
@@ -59,6 +59,7 @@ router.post("/google-login", async (req, res) => {
       const payload = ticket.getPayload(); // Contains user information from Google
   
       let user = await User.findOne({ email: payload.email });
+
       if (!user) {
         // Create new user if not found
         user = new User({
@@ -67,12 +68,27 @@ router.post("/google-login", async (req, res) => {
             lastName: payload.family_name || "",
           },
           email: payload.email,
+          googleId: payload.sub,
         });
         await user.save();
+
+        // signup mail service.
+        GoogleOAuthMailService({
+          emailId:payload.email,
+          userName:payload.given_name,
+        });
+
       }
   
       // Generate your own JWT token
       const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "24h" });
+
+      res.cookie('token',token,{
+        httpOnly: true,   // Prevents XSS attacks (not accessible by JavaScript)
+        secure: false,     // Ensures HTTPS only (set `false` for localhost)
+        sameSite: 'Lax', // Required for cross-origin requests with cookies
+        expires: new Date(Date.now() + 24 * 60 * 60 * 1000), // Expires in 24 hours
+      });
   
       res.status(200).json({ token, user });
     } catch (error) {

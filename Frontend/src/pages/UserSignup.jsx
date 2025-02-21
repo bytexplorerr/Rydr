@@ -2,9 +2,11 @@ import React, { useContext, useRef, useState } from 'react'
 import { assets } from '../assets/assets';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { GoogleLogin } from '@react-oauth/google';
 import { toast } from 'react-toastify';
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
+import { UserDataContext } from '../store/UserContext';
 
 const UserSignup = () => {
 
@@ -12,6 +14,8 @@ const UserSignup = () => {
     const lastname = useRef(null);
     const email = useRef(null);
     const password = useRef(null);
+
+    const {setUserToken,setUserName,setRole} = useContext(UserDataContext);
 
     const [showPassword,setShowPassword] = useState(false);
 
@@ -35,7 +39,7 @@ const UserSignup = () => {
 
             const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/users/register`,newUser,{
                 headers: { "Content-Type": "application/json" },
-                withCredentials: true
+                withCredentials:true,
             });
 
             if(response.status === 201){
@@ -53,6 +57,35 @@ const UserSignup = () => {
             toast.error('Something went wrong, Try Again!');
         }
     }
+
+    const handleGoogleSuccess = async (response) => {
+        try {
+            const { credential } = response; // Fix: Correct property extraction
+
+    
+            const res = await axios.post(`${import.meta.env.VITE_BASE_URL}/auth/google-login`, 
+                { credential },  // Fix: Sending correct credential key
+                { headers: { "Content-Type": "application/json" }, withCredentials: true }
+            );
+    
+            if (res.status === 200) {
+                toast.success("Login Successful!");
+                
+                setUserToken(res.data.token);
+                setUserName(res.data.user.fullName.firstName);
+                setRole("user");
+                
+                navigate("/ride");
+            }
+        } catch (error) {
+            toast.error(error.response?.data?.message || "Google Login Failed!");
+        }
+    };
+
+    const handleGoogleFailure = (error) => {
+        console.log("Google Sign-in failed", error);
+        toast.error("Google Sign-in failed");
+    };
 
   return (
     <section className='my-16 mx-2 flex justify-center p-4 max-[500px]:p-0 max-[500px]:bg-none' style={{backgroundImage:`url(${assets.map_bg_image})`}}>
@@ -118,10 +151,12 @@ const UserSignup = () => {
             </div>
 
             <div className='flex justify-center'>
-                <div className='mt-1 px-2 py-1 rounded-lg bg-[#8136E2] inline-flex justify-center items-center cursor-pointer'>
-                    <img src={assets.google_logo} width="15px" height="15px" alt = "Google Logo"/>
-                    <p className='ml-1.5'>Continue with Google</p>
-                </div>
+                <GoogleLogin
+                clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}
+                onSuccess={handleGoogleSuccess}
+                onError={handleGoogleFailure}
+                useOneTap
+                />
             </div>
 
             <p className='text-center mt-6'>Already have an Account? <Link to="/login" className='text-blue-500 text-nowrap'>Sign in</Link></p> 

@@ -33,6 +33,8 @@ const SocketProvider = ({children})=>{
 
     useEffect(()=>{
 
+        if(role === null) return;
+
         let roleSent='user';
         if(role === 'captain') {
             roleSent = 'user';
@@ -55,7 +57,7 @@ const SocketProvider = ({children})=>{
         return ()=>{
             removeMessage('received-chat',handleNewChat);
         }
-    },[]);
+    },[role]);
 
 
     useEffect(()=>{

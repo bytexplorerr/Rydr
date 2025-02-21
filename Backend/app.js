@@ -16,15 +16,28 @@ const passport = require("passport");
 
 connectToDB();
 
-app.use(express.json());
-app.use(cors({ origin:process.env.CLIENT_URL, credentials: true }));// you need to mention that from what domains you need to accept the request, that you need to mention here in 'cors'.
-app.use(express.urlencoded({extended:true}));
 app.use(cookieParser());
+app.use(express.json());
+app.use(cors({
+    origin: process.env.CLIENT_URL, // Frontend URL
+    credentials: true, // Allow cookies
+    allowedHeaders: ['Content-Type', 'Authorization'], // Necessary headers are allowed
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'] // Allow all necessary methods
+}));// you need to mention that from what domains you need to accept the request, that you need to mention here in 'cors'.
+
+
+app.use(express.urlencoded({extended:true}));
 
 app.use(session({
     secret:"secret",
     resave:false,
     saveUninitialized:true,
+    cookie:{
+        httpOnly:true,
+        secure:false,
+        sameSite:'Lax',
+        expires:new Date(Date.now() + 24 * 60 * 60 * 1000),
+    }
 }))
 
 app.use(passport.initialize());

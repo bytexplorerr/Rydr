@@ -31,18 +31,6 @@ const UserForgotPassword = () => {
                 }
             }
 
-            if(localStorage.getItem('token')) {
-                localStorage.removeItem('token');
-            }
-
-            if(localStorage.getItem('username')) {
-                localStorage.removeItem('username');
-            }
-
-            if(localStorage.getItem('role')) {
-                localStorage.removeItem('role');
-            }
-
             setUserName(null);
             setRole(null);
             setUserToken(null);

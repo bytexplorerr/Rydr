@@ -11,6 +11,8 @@ const authUser = async  (req,res,next) => {
     try
     {
         const token = req.cookies.token || req.headers.authorization?.split(' ')[1];
+
+
         if(!token){
             return res.status(401).json({message:'Unauthorized!'});
         }
@@ -25,8 +27,13 @@ const authUser = async  (req,res,next) => {
 
         // decode the token
         const decode = jwt.verify(token,process.env.JWT_SECRET);
+        let decodeId = decode.id;
+
+        if(decode.id === undefined) {
+            decodeId = decode._id;
+        }
         // after decoding we will get the 'id' of the user which we have added while creating the token.
-        const user = await userModel.findById(decode._id);
+        const user = await userModel.findById(decodeId);
 
         if(!user){
             return res.status(404).json({message:'User not Found!'});

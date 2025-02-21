@@ -1,19 +1,30 @@
 import React, { useContext } from 'react'
 import { UserDataContext } from './UserContext'
-import { Navigate, Outlet } from 'react-router-dom';
+import { Navigate, Outlet, useLocation } from 'react-router-dom';
 
 const ProtectedRoutes = () => {
 
-  const {userToken,setSelectedNavbarItem,setUserToken,setRole,setUserName} = useContext(UserDataContext);
+  const {userToken,setSelectedNavbarItem,setUserToken,setRole,setUserName,role,loading} = useContext(UserDataContext);
+  const location = useLocation();
 
-  const token = document.cookie.split('; ').find((row)=>row.startsWith('token='))?.split('=')[1];
+  if(loading) {
+    return <div>Loading...</div>
+  }
 
-  if(!token) {
+  if(!userToken) {
     setUserToken(null);
     setRole(null);
     setUserName(null);
     setSelectedNavbarItem('');
+
+    // If they are trying to access the '/drive' page, redirect to '/captain-login'
+    if (location.pathname.startsWith('/drive')) {
+      return <Navigate to="/captain-login" />;
+    }
+
+    // Otherwise, redirect them to the general login page
     return <Navigate to="/login" />;
+
   }
 
   return <Outlet />;

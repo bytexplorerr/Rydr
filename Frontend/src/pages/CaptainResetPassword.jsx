@@ -30,7 +30,9 @@ const CaptainResetPassword = () => {
 
             try {
 
-                const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/captains/verify-reset-token/${token}`);
+                const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/captains/verify-reset-token/${token}`,{
+                    withCredentials:true
+                });
 
                 if(response.status !== 200) {
                     navigate("/");
@@ -59,6 +61,8 @@ const CaptainResetPassword = () => {
             const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/captains/reset-password`,{
                 token,
                 newPassword:newPassword.current.value
+            },{
+                withCredentials:true,
             });
 
             if(response.status === 200) {

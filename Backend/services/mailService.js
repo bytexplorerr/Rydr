@@ -75,4 +75,24 @@ const ForgotPasswordMailService = async ({emailId,userName,verificationToken,rol
     }
 }
 
-module.exports = {SignupMailService,ForgotPasswordMailService}
+const GoogleOAuthMailService = async ({emailId,userName})=>{
+    try {
+
+        const subject = "'Welcome to Rydr-Let\'s get Moving! 🚗💨";
+        const emailTemplate = fs.readFileSync(path.join(__dirname,"../views/GoogleOAuthMailView.html"),"utf-8");
+
+        const emailContent = emailTemplate.replace("{{userName}}",userName);
+
+        const info = await transporter.sendMail({
+            from:email,
+            to:emailId,
+            subject:subject,
+            html:emailContent,
+        });
+
+    } catch(err) {
+        console.log(err);
+    }
+}
+
+module.exports = {SignupMailService,ForgotPasswordMailService,GoogleOAuthMailService}

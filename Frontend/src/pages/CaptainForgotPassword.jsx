@@ -30,18 +30,6 @@ const CaptainForgotPassword = () => {
                 }
             }
 
-            if(localStorage.getItem('token')) {
-                localStorage.removeItem('token');
-            }
-
-            if(localStorage.getItem('username')) {
-                localStorage.removeItem('username');
-            }
-
-            if(localStorage.getItem('role')) {
-                localStorage.removeItem('role');
-            }
-
             setUserName(null);
             setRole(null);
             setUserToken(null);
@@ -51,8 +39,7 @@ const CaptainForgotPassword = () => {
                 emailId:email.current.value
             },{
                 headers:{"Content-Type":"application/json"},
-                withCredentials:true
-            });
+            },{withCredentials:true});
 
             if(response.status === 200) {
                 toast.success('Email Sent Sucessfullty, Please check your mail');

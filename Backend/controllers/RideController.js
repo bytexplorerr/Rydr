@@ -37,12 +37,14 @@ const createNewRide = async (req,res,next)=> {
         // now we need to send the message to all the captain via their 'socket-id'. we are not sending 'otp' to captain.
 
         captaInRadius.map((captain)=>{
-            const messageObject = {
-                event:'new-ride',
-                data:rideWithUser
+            if(captain.vehicle.vehicleType === vehicleType) { // only send to similar vehicle type captain
+                const messageObject = {
+                    event:'new-ride',
+                    data:rideWithUser
+                }
+                socket.sendMessageToSocketID(captain.socketId,messageObject);
             }
-            socket.sendMessageToSocketID(captain.socketId,messageObject);
-        })
+        });
 
         return res.status(201).json(ride);
 
@@ -185,7 +187,6 @@ const confirmRide = async (req,res,next) => {
         };
 
         socket.sendMessageToSocketID(user.socketId,{event:'ride-confirmed',data:data});
-
         return res.status(200).json({ride,rideInfo:data});
 
     } catch(err) {

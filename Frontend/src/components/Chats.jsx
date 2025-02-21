@@ -34,6 +34,8 @@ const Chats = () => {
                 tripInfo,
                 role,
                 data:messageText,
+            },{
+                withCredentials:true
             });
             if(response.status === 200) {
                 setMessages((prevMessages)=> [...prevMessages,{data:messageText,role}]);

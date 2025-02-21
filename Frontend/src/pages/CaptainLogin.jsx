@@ -27,16 +27,12 @@ const CaptainLogin = () => {
 
         try {
             const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/captains/login`,captain,{
+                headers:{"Content-Type":"application/json"},
                 withCredentials:true,
-                headers:{"Content-Type":"application/json"}
-            })
+            },)
 
             if(response.status === 200){
                 toast.success('Captain Login Successfully!');
-
-                localStorage.setItem('token',response.data.token);
-                localStorage.setItem('username',response.data.captain.fullName.firstName);
-                localStorage.setItem('role',"captain");
 
                 setUserToken(response.data.token);
                 setUserName(response.data.captain.fullName.firstName);
@@ -68,7 +64,9 @@ const CaptainLogin = () => {
 
             try
             {
-                const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/captains/verify-token/${token}`);
+                const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/captains/verify-token/${token}`,{
+                    withCredentials:true,
+                });
 
                 if(response.status === 200 && isMounted) {
                     toast.success('Email verified sucessfully, Please Log in!');

@@ -31,16 +31,11 @@ const UserLogin = () => {
 
             const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/users/login`,user,{
                 headers: { "Content-Type": "application/json" },
-                withCredentials: true
+                withCredentials:true,
             });
 
             if(response.status === 200){
                 toast.success('Login Successfully!');
-
-                localStorage.setItem('token',response.data.token);
-                localStorage.setItem('username',response.data.user.fullName.firstName);
-                localStorage.setItem('role',"user");
-
 
                 setUserToken(response.data.token);
                 setUserName(response.data.user.fullName.firstName);
@@ -71,7 +66,9 @@ const UserLogin = () => {
             if(!token) return;
 
             try {
-                const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/users/verify-token/${token}`);
+                const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/users/verify-token/${token}`,{
+                    withCredentials:true,
+                });
     
                 if(response.status === 200 && isMounted) {
                     toast.success('Email Verified Succesfully! Please Log in.');
@@ -100,6 +97,7 @@ const UserLogin = () => {
     const handleGoogleSuccess = async (response) => {
         try {
             const { credential } = response; // Fix: Correct property extraction
+
     
             const res = await axios.post(`${import.meta.env.VITE_BASE_URL}/auth/google-login`, 
                 { credential },  // Fix: Sending correct credential key
@@ -108,9 +106,6 @@ const UserLogin = () => {
     
             if (res.status === 200) {
                 toast.success("Login Successful!");
-                localStorage.setItem("token", res.data.token);
-                localStorage.setItem("username", res.data.user.fullName.firstName);
-                localStorage.setItem("role", "user");
                 
                 setUserToken(res.data.token);
                 setUserName(res.data.user.fullName.firstName);
@@ -174,6 +169,7 @@ const UserLogin = () => {
 
             <div className='flex justify-center'>
                 <GoogleLogin
+                clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}
                 onSuccess={handleGoogleSuccess}
                 onError={handleGoogleFailure}
                 useOneTap

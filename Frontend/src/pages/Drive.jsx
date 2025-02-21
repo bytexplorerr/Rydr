@@ -116,10 +116,9 @@ import Riding from '../components/Riding';
   useEffect(() => {
       const handleNewRide = async (data) => {
         try {
-          const token = document.cookie.split('; ').find((row)=>row.startsWith('token='))?.split('=')[1];
+          console.log('hello');
           const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/rides/distance-from-user`,{pickup:data.pickup},{
             headers:{
-              "Authorization":`Bearer ${token}`,
               "Content-Type":"application/json",
             },
             withCredentials:true
@@ -154,16 +153,8 @@ import Riding from '../components/Riding';
     const handleConfirmRide = async (rideInfo)=> {
 
       try {
-        const token = document.cookie.split('; ').find((row)=> row.startsWith('token='))?.split('=')[1];
-        if(!token) {
-          toast.error('Unauthorized to Confirm the Ride, Login Agian!');
-          navigate("/captain-login");
-        }
         
         const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/rides/captain-ride-confirm`,{rideInfo},{
-          headers:{
-            Authorization:`Bearer ${token}`,
-          },
           withCredentials:true
         });
 

@@ -82,8 +82,15 @@ const loginUser = async (req,res,next) =>{
 
         const token = user.generateAuthToken();
 
-        res.cookie('token',token);
-        res.status(200).json({token,user});
+        // Set Cookie with Token
+        res.cookie('token', token, {
+            httpOnly: true,   // Prevents XSS attacks (not accessible by JavaScript)
+            secure: false,     // Ensures HTTPS only (set `false` for localhost)
+            sameSite: 'Lax', // Required for cross-origin requests with cookies
+            expires: new Date(Date.now() + 24 * 60 * 60 * 1000), // Expires in 24 hours
+        });
+
+        return res.status(200).json({token,user});
     }
     catch(err)
     {
@@ -92,7 +99,7 @@ const loginUser = async (req,res,next) =>{
 }
 
 const getUserProfile = async (req,res,next) => {
-    return res.status(200).json(req.user);
+    return res.status(200).json({user:req.user,token:req.cookies.token});
 }
 
 const logoutUser = async (req,res,next) => {
@@ -100,6 +107,8 @@ const logoutUser = async (req,res,next) => {
     try
     {
         const token = req.cookies.token || req.headers.authorization?.split(' ')[1];
+
+        console.log(token);
 
         if(!token){
             return res.status(400).json({ message: "No token found, already logged out!" });

@@ -17,11 +17,7 @@ const Vehicles = () => {
 
     const handleSelectVehicle = async (vehicleImg,vehicleType) =>{
 
-        const token = document.cookie.split('; ').find((row)=>row.startsWith('token=')).split('=')[1];
         const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/rides/get-fare?pickup=${pickupLocation}&drop=${dropoffLocation}`,{
-            headers:{
-                Authorization:`Bearer ${token}`,
-            },
             withCredentials:true
         });
 
@@ -63,8 +59,6 @@ const Vehicles = () => {
                     </p>
                     <p className='flex items-center text-md font-light justify-center my-0.5'>
                         <span className='mr-0.5'>2 </span> mins away 
-                        <FaCircle className='w-[5px] mx-1'/>
-                        <span>15:34</span>
                     </p>
                     <p className='font-extralight text-sm text-center my-0.5'>Affordable, compact rides</p>
                 </div>
@@ -86,8 +80,6 @@ const Vehicles = () => {
                     </p>
                     <p className='flex items-center text-md font-light justify-center my-0.5'>
                         <span className='mr-0.5'>2 </span> mins away 
-                        <FaCircle className='w-[5px] mx-1'/>
-                        <span>15:34</span>
                     </p>
                     <p className='font-extralight text-sm text-center my-0.5'>Affordable, motorcycle rides</p>
                 </div>
@@ -109,8 +101,6 @@ const Vehicles = () => {
                     </p>
                     <p className='flex items-center text-md font-light justify-center my-0.5'>
                         <span className='mr-0.5'>2 </span> mins away 
-                        <FaCircle className='w-[5px] mx-1'/>
-                        <span>15:34</span>
                     </p>
                     <p className='font-extralight text-sm text-center my-0.5'>Affordable, auto rides</p>
                 </div>

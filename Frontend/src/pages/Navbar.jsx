@@ -82,18 +82,6 @@ const Navbar = () => {
             setDropDown(false);
             toast.success('Logout Successfully!');
 
-            if(localStorage.getItem('token')) {
-                localStorage.removeItem('token');
-            }
-
-            if(localStorage.getItem('username')) {
-                localStorage.removeItem('username');
-            }
-
-            if(localStorage.getItem('role')) {
-                localStorage.removeItem('role');
-            }
-
             setUserName(null);
             setUserToken(null);
             setRole(null);

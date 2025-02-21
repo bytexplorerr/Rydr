@@ -31,7 +31,9 @@ const UserResetPassword = () => {
 
             try {
 
-                const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/users/verify-reset-token/${token}`);
+                const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/users/verify-reset-token/${token}`,{
+                    withCredentials:true,
+                });
 
                 if(response.status !== 200) {
                     navigate("/");
@@ -60,7 +62,7 @@ const UserResetPassword = () => {
             const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/users/reset-password`,{
                 token,
                 newPassword:newPassword.current.value
-            });
+            },{withCredentials:true});
 
             if(response.status === 200) {
                 toast.success('Password Changed Succesfully! Please Login.');
