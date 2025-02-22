@@ -31,19 +31,23 @@ Rydr is a modern ride-sharing platform built using the **MERN Stack**. It provid
 ## 📸 Screenshots
 
 ### 🚀 Home Page
-<div>
-  <p align="center">
-    <div align="center" width="30%">
-      <img src="Images/home_page_1.png" />
-      <img src="Images/home_page_4.png" />
-      <img src="Images/home_page_5.png"/>
-      <img src="Images/home_page_7.png"/>
-    </div>
+<div align="center">
+  <!-- Row 1 -->
+  <div>
+    <img src="Images/home_page_1.png" width="30%" />
+    <img src="Images/home_page_4.png" width="30%" />
+    <img src="Images/home_page_5.png" width="30%" />
+    <img src="Images/home_page_7.png" width="30%" />
+  </div>
+
+  <!-- Row 2 -->
+  <div>
     <img src="Images/home_page_2.png" width="25%" />
     <img src="Images/home_page_3.png" width="25%" />
     <img src="Images/home_page_8.png" width="10%" />
-  </p>
+  </div>
 </div>
+
 
 ## ⚙️ Installation
 
