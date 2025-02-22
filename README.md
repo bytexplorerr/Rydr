@@ -36,17 +36,17 @@ Rydr is a modern ride-sharing platform built using the **MERN Stack**. It provid
   
   <!-- Left Column: Vertical Images -->
   <div style="display: flex; flex-direction: column; gap: 10px; width: 50%; align-items: center;">
-    <img src="Images/home_page_1.png" style="width: 80%;" />
-    <img src="Images/home_page_4.png" style="width: 80%;" />
-    <img src="Images/home_page_5.png" style="width: 80%;" />
-    <img src="Images/home_page_7.png" style="width: 80%;" />
+    <img src="Images/home_page_1.png" />
+    <img src="Images/home_page_4.png">
+    <img src="Images/home_page_5.png" />
+    <img src="Images/home_page_7.png"/>
   </div>
 
   <!-- Right Column: Horizontal Images -->
   <div style="display: flex; flex-wrap: wrap; gap: 10px; width: 50%; justify-content: center;">
-    <img src="Images/home_page_2.png" style="width: 45%;" />
-    <img src="Images/home_page_3.png" style="width: 45%;" />
-    <img src="Images/home_page_8.png" style="width: 30%;" />
+    <img src="Images/home_page_2.png" width="45%" />
+    <img src="Images/home_page_3.png" width="45%" />
+    <img src="Images/home_page_8.png" width="30%" />
   </div>
 
 </div>
