@@ -28,6 +28,26 @@ Rydr is a modern ride-sharing platform built using the **MERN Stack**. It provid
 | **Email Services** | Nodemailer |
 | **API Calls** | Axios |
 
+## 📸 Screenshots
+
+### 🚀 Home Page
+<div>
+  <p align="center">
+    <img src="Images/home_page_1.png" width="40%" />
+    <img src="Images/home_page_2.png" width="25%" />
+    <img src="Images/home_page_3.png" width="25%" />
+  </p>
+  <p align="center">
+    <img src="Images/home_page_4.png" width="45%" />
+    <img src="Images/home_page_5.png" width="45%" />
+  </p>
+   <p align="center">
+    <img src="Images/home_page_6.png" width="30%" />
+    <img src="Images/home_page_7.png" width="30%" />
+    <img src="Images/home_page_8.png" width="30%" />
+  </p>
+</div>
+
 ## ⚙️ Installation
 
 ### Prerequisites
