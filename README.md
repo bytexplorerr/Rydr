@@ -32,21 +32,21 @@ Rydr is a modern ride-sharing platform built using the **MERN Stack**. It provid
 
 ### 🚀 Home Page
 
-<div style="display: flex; justify-content: center; align-items: center; width:95%;">
+<div style="display: flex; justify-content: space-between; align-items: flex-start; width: 95%; margin: auto;">
   
   <!-- Left Column: Vertical Images -->
-  <div style="display: flex; flex-direction: column; gap: 10px; width: 50%;">
-    <img src="Images/home_page_1.png" width="200px" />
-    <img src="Images/home_page_4.png" width="200px" />
-    <img src="Images/home_page_5.png" width="200px" />
-    <img src="Images/home_page_7.png" width="200px" />
+  <div style="display: flex; flex-direction: column; gap: 10px; width: 50%; align-items: center;">
+    <img src="Images/home_page_1.png" style="width: 80%;" />
+    <img src="Images/home_page_4.png" style="width: 80%;" />
+    <img src="Images/home_page_5.png" style="width: 80%;" />
+    <img src="Images/home_page_7.png" style="width: 80%;" />
   </div>
 
   <!-- Right Column: Horizontal Images -->
-  <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-left: 20px; width:50%">
-    <img src="Images/home_page_2.png" width="150px" />
-    <img src="Images/home_page_3.png" width="150px" />
-    <img src="Images/home_page_8.png" width="100px" />
+  <div style="display: flex; flex-wrap: wrap; gap: 10px; width: 50%; justify-content: center;">
+    <img src="Images/home_page_2.png" style="width: 45%;" />
+    <img src="Images/home_page_3.png" style="width: 45%;" />
+    <img src="Images/home_page_8.png" style="width: 30%;" />
   </div>
 
 </div>
