@@ -35,5 +35,5 @@ Make sure you have **Node.js**, **MongoDB**, and **npm/yarn** installed.
 
 ### Clone the repository
 ```bash
-git clone https://github.com/devrajsinh-d-jethwa/Rydr.git
+git clone https://github.com/bytexplorerr/Rydr.git
 cd Rydr
